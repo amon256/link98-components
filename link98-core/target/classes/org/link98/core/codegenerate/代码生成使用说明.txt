@@ -1,0 +1,1 @@
+CodeGenerator.main方法的第一行把class修改为要生成的实体类,然后运行即可
