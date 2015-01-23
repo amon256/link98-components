@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.link98.core.domains.common.UploadFile">
+	<sql id="ddl">
+		CREATE TABLE t_upload_file (
+			f_id varchar(40) not null,
+			f_id varchar(40),
+			f_create_time DATETIME,
+			f_last_update_time DATETIME,
+			f_file_name varchar(200),
+			f_file_path varchar(500),
+		  PRIMARY KEY (f_id)
+		)
+	</sql>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="GENERATED_KEY" parameterType="me.link98.core.domains.common.UploadFile">
+			INSERT INTO t_upload_file (
+				f_id,
+				f_create_time,
+				f_last_update_time,
+				f_file_name,
+				f_file_path
+			)
+			values
+			(
+				#{id,jdbcType=VARCHAR},
+				#{createTime,jdbcType=TIMESTAMP},
+				#{lastUpdateTime,jdbcType=TIMESTAMP},
+				#{fileName,jdbcType=VARCHAR},
+				#{filePath,jdbcType=VARCHAR}
+			)
+	</insert>
+	<update id="update" parameterType="me.link98.core.domains.common.UploadFile">
+		UPDATE t_upload_file
+		SET 
+			f_id = #{id,jdbcType=VARCHAR},
+			f_create_time = #{createTime,jdbcType=TIMESTAMP},
+			f_last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+			f_file_name = #{fileName,jdbcType=VARCHAR},
+			f_file_path = #{filePath,jdbcType=VARCHAR}
+		WHERE f_id = #{id}
+	</update>
+	<delete id="delete" parameterType="int">
+		DELETE FROM t_upload_file WHERE f_id = #{id}
+	</delete>
+	<sql id="selectSql">
+		SELECT 
+			uploadfile.f_id AS "id",
+			uploadfile.f_create_time AS "createTime",
+			uploadfile.f_last_update_time AS "lastUpdateTime",
+			uploadfile.f_file_name AS "fileName",
+			uploadfile.f_file_path AS "filePath"
+	</sql>
+	<sql id="fromSql">
+		FROM t_upload_file AS uploadfile
+	</sql>
+	<sql id="whereSql">
+		<where>
+				<if test="id != null  and id != ''">
+				AND uploadfile.f_id = #{id}
+				</if>
+				<if test="createTime != null  and createTime != ''">
+				AND uploadfile.f_create_time = #{createTime}
+				</if>
+				<if test="lastUpdateTime != null  and lastUpdateTime != ''">
+				AND uploadfile.f_last_update_time = #{lastUpdateTime}
+				</if>
+				<if test="fileName != null  and fileName != ''">
+				AND uploadfile.f_file_name = #{fileName}
+				</if>
+				<if test="filePath != null  and filePath != ''">
+				AND uploadfile.f_file_path = #{filePath}
+				</if>
+		</where>
+	</sql>
+	<select id="selectById" parameterType="int" resultType="me.link98.core.domains.common.UploadFile">
+		<include refid="selectSql"/>
+		<include refid="fromSql"/>
+		WHERE uploadfile.f_id = #{id}
+	</select>
+	<select id="select" parameterType="me.link98.core.domains.common.UploadFile" resultType="me.link98.core.domains.common.UploadFile">
+		<include refid="selectSql"/>
+		<include refid="fromSql"/>
+		<include refid="whereSql"/>
+		<if test="orderByColumns != null and orderByColumns != ''">
+			ORDER BY ${orderByColumns}
+		</if>
+	</select>
+	<select id="selectCount" parameterType="me.link98.core.domains.common.UploadFile" resultType="int">
+		SELECT 
+		COUNT(1)
+		<include refid="fromSql"/>
+		<include refid="whereSql"/>
+	</select>
+</mapper>

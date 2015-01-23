@@ -2,8 +2,8 @@ package me.link98.core.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import ${fullBeanName};
+import me.link98.core.domains.common.UploadFile;
 
 @Transactional
-public interface ${beanName}Service extends BaseService<${beanName}>{
+public interface UploadFileService extends BaseService<UploadFile>{
 }

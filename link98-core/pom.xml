@@ -64,6 +64,11 @@
 			<version>3.2.1.RELEASE</version>
 		</dependency>
 		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-tx</artifactId>
+		  <version>3.2.1.RELEASE</version>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.16</version>
@@ -76,7 +81,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.0.1</version>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbcp</groupId>

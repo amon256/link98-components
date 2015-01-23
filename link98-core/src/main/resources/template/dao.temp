@@ -1,6 +1,6 @@
 package me.link98.core.dao;
 
-import me.link98.core.domains.${beanName};
+import ${fullBeanName};
 
 public interface ${beanName}Dao extends BaseDao<${beanName}>{
 }

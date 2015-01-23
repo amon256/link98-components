@@ -1,14 +1,12 @@
 <#setting number_format="#">
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${beanName}">
+<mapper namespace="${fullBeanName}">
 	<sql id="ddl">
 		CREATE TABLE ${tableName} (
-			f_id int NOT NULL AUTO_INCREMENT,
+			f_id varchar(40) not null,
   <#list fields as field>
-		<#if field.fieldName != 'id'>
 			${field.columnName!'unknown'} ${field.dbType!'unknown'}<#if field.dbType?lower_case == 'varchar'>(${field.length!10})</#if>,
-		</#if>
 	</#list>
 		  PRIMARY KEY (f_id)
 		)
@@ -16,17 +14,13 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="GENERATED_KEY" parameterType="${fullBeanName}">
 			INSERT INTO ${tableName} (
 			<#list fields as field>
-				<#if field.fieldName != 'id'>
 				${field.columnName!'unknown'}<#if field_has_next>,</#if>
-				</#if>
 			</#list>
 			)
 			values
 			(
 			<#list fields as field>
-				<#if field.fieldName != 'id'>
 				${'#'}${'{'}${field.fieldName}<#if field.joinField == true>.id</#if>,jdbcType=${field.jdbcType}${'}'}<#if field_has_next>,</#if>
-				</#if>
 			</#list>
 			)
 	</insert>
@@ -34,9 +28,7 @@
 		UPDATE ${tableName}
 		SET 
 		<#list fields as field>
-			<#if field.fieldName != 'id'>
 			${field.columnName!'unknown'} = ${'#'}${'{'}${field.fieldName}<#if field.joinField == true>.id</#if>,jdbcType=${field.jdbcType}${'}'}<#if field_has_next>,</#if>
-			</#if>
 		</#list>
 		WHERE f_id = ${"#"}${"{"}id${"}"}
 	</update>
